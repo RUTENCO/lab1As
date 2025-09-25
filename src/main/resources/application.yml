@@ -1,0 +1,40 @@
+# Conversion to YAML from Properties formar report
+# Warnings:
+# - The yaml file had comments which are lost in the refactoring!
+spring:
+  application:
+    name: lab1As
+  datasource:
+    url: jdbc:postgresql://${DB_HOST_LOCAL}:${DB_PORT_LOCAL}/${DB_NAME_LOCAL}?sslmode=${DB_SSLMODE_LOCAL}
+    username: ${DB_USER_LOCAL}
+    password: ${DB_PASSWORD_LOCAL}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  transaction:
+    default-timeout: 30
+    rollback-on-commit-failure: true
+  mvc:
+    contentnegotiation:
+      favor-path-extension: false
+      favor-parameter: false
+      media-types:
+        json: application/json
+server:
+  port: 8080
+logging:
+  level:
+    org:
+      springframework: INFO
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

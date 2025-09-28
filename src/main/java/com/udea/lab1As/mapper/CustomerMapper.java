@@ -6,9 +6,9 @@ import org.mapstruct.factory.Mappers;
 import com.udea.lab1As.dto.CustomerDto;
 import com.udea.lab1As.entity.Customer;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring") // para que Spring gestione el mapper
 public interface CustomerMapper {
-    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
-    CustomerDto toDto(Customer customer);
-    Customer toEntity(CustomerDto customerDto);
+    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class); // obtener la instancia del mapper
+    CustomerDto toDto(Customer customer); // convertir entidad a DTO
+    Customer toEntity(CustomerDto customerDto); // convertir DTO a entidad
 }

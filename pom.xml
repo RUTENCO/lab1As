@@ -88,6 +88,13 @@
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>0.2.0</version>
 		</dependency>
+		
+		<!-- Dotenv Java para cargar variables del archivo .env -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>3.0.0</version>
+		</dependency>
     </dependencies>
 
 	<build>

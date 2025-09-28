@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +63,42 @@ public class CustomerController {
         // además, se puede incluir la ubicación del nuevo recurso en los encabezados de la respuesta
         // body contiene el cliente creado
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+    }
+
+    // actualizar un cliente existente
+    // PUT /api/customers/{id} ---> actualizar un cliente por su id
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
+        try {
+            CustomerDto updatedCustomer = customerService.updateCustomer(id, customerDto);
+            return ResponseEntity.ok(updatedCustomer);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    // eliminar un cliente
+    // DELETE /api/customers/{id} ---> eliminar un cliente por su id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+        try {
+            customerService.deleteCustomer(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    // obtener cliente por número de cuenta
+    // GET /api/customers/account/{accountNumber} ---> obtener cliente por número de cuenta
+    @GetMapping("/account/{accountNumber}")
+    public ResponseEntity<CustomerDto> getCustomerByAccountNumber(@PathVariable String accountNumber) {
+        try {
+            CustomerDto customer = customerService.getCustomerByAccountNumber(accountNumber);
+            return ResponseEntity.ok(customer);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package com.udea.lab1As.dto;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) // Exclude null fields from JSON
 public class TransactionDto {
@@ -10,6 +11,8 @@ public class TransactionDto {
     private String senderAccountNumber;
     private String receiverAccountNumber;
     private Double amount;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate transactionDate;
 
     // constructores

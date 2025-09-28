@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udea.lab1As.dto.TransactionDto;
 import com.udea.lab1As.entity.Transaction;
@@ -20,6 +21,7 @@ public class TransactionService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Transactional // Si algo falla, TODO se revierte (rollback)
     public TransactionDto transferMoney(TransactionDto transactionDto) {
         // Lógica para transferir dinero entre cuentas
 
@@ -60,6 +62,7 @@ public class TransactionService {
         transaction.setSenderAccountNumber(sender.getAccountNumber());
         transaction.setReceiverAccountNumber(receiver.getAccountNumber());
         transaction.setAmount(transactionDto.getAmount());
+        transaction.setTransactionDate(transactionDto.getTransactionDate()); // GREGAR LA FECHA
         transactionRepository.save(transaction);
 
         // retornar la transacción como DTO
@@ -68,6 +71,7 @@ public class TransactionService {
         transactionDto.setSenderAccountNumber(transaction.getSenderAccountNumber());
         transactionDto.setReceiverAccountNumber(transaction.getReceiverAccountNumber());
         transactionDto.setAmount(transaction.getAmount());
+        transactionDto.setTransactionDate(transaction.getTransactionDate()); // AGREGAR LA FECHA
 
         return transactionDto;
     }
@@ -82,6 +86,7 @@ public class TransactionService {
             dto.setSenderAccountNumber(transaction.getSenderAccountNumber());
             dto.setReceiverAccountNumber(transaction.getReceiverAccountNumber());
             dto.setAmount(transaction.getAmount());
+            dto.setTransactionDate(transaction.getTransactionDate()); //  AGREGAR LA FECHA
             return dto;
         }).collect(Collectors.toList());
     }

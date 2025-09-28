@@ -1,5 +1,5 @@
 package com.udea.lab1As.entity;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
@@ -30,7 +30,7 @@ public class Transaction {
     private Double amount;
 
     @Column(nullable = false)
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
 
     // constructores
     public Transaction() {}
@@ -42,7 +42,7 @@ public class Transaction {
             @JsonProperty("senderAccountNumber") String senderAccountNumber, 
             @JsonProperty("receiverAccountNumber") String receiverAccountNumber, 
             @JsonProperty("amount") Double amount,
-            @JsonProperty("transactionDate") LocalDateTime transactionDate
+            @JsonProperty("transactionDate") LocalDate transactionDate
     ) 
     {
             this.id = id;

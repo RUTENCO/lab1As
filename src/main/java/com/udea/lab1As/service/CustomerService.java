@@ -3,6 +3,7 @@ package com.udea.lab1As.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udea.lab1As.dto.CustomerDto;
 import com.udea.lab1As.mapper.CustomerMapper;  
@@ -38,11 +39,52 @@ public class CustomerService {
     }
 
     // crear un nuevo cliente
+    @Transactional
     public CustomerDto createCustomer(CustomerDto customerDto) {
         // var, es una forma de declarar variables locales sin especificar el tipo explícitamente
         // el tipo se infiere automáticamente a partir del valor asignado
         var customer = customerMapper.toEntity(customerDto); // convierte el DTO a una entidad
         var savedCustomer = customerRepository.save(customer); // guarda la entidad en la base de datos
         return customerMapper.toDto(savedCustomer); // convierte la entidad guardada de vuelta a un DTO y lo retorna
+    }
+
+    // actualizar un cliente existente
+    @Transactional
+    public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
+        return customerRepository.findById(id)
+                .map(existingCustomer -> {
+                    // Actualizar solo los campos que no son null
+                    if (customerDto.getFirstName() != null) {
+                        existingCustomer.setFirstName(customerDto.getFirstName());
+                    }
+                    if (customerDto.getLastName() != null) {
+                        existingCustomer.setLastName(customerDto.getLastName());
+                    }
+                    if (customerDto.getAccountNumber() != null) {
+                        existingCustomer.setAccountNumber(customerDto.getAccountNumber());
+                    }
+                    if (customerDto.getBalance() != null) {
+                        existingCustomer.setBalance(customerDto.getBalance());
+                    }
+                    var updatedCustomer = customerRepository.save(existingCustomer);
+                    return customerMapper.toDto(updatedCustomer);
+                })
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+    }
+
+    // eliminar un cliente por su id
+    @Transactional
+    public void deleteCustomer(Long id) {
+        if (!customerRepository.existsById(id)) {
+            throw new RuntimeException("Customer not found with id: " + id);
+        }
+        customerRepository.deleteById(id);
+    }
+
+    // buscar cliente por número de cuenta
+    public CustomerDto getCustomerByAccountNumber(String accountNumber) {
+        return customerRepository.findByAccountNumber(accountNumber)
+                .map(customerMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("Customer not found with account number: " + accountNumber));
     }
 }

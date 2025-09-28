@@ -2,7 +2,6 @@ package com.udea.lab1As.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udea.lab1As.dto.CustomerDto;
@@ -15,7 +14,6 @@ public class CustomerService {
     private final CustomerRepository customerRepository; // Repositorio para acceder a los datos de clientes
     private final CustomerMapper customerMapper; // Mapper para convertir entre entidad y DTO
 
-    @Autowired // inyección de dependencias a través del constructor
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;

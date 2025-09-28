@@ -21,7 +21,7 @@ public class TransactionService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Transactional // Si algo falla, TODO se revierte (rollback)
+    @Transactional // Si algo falla, todo se revierte (rollback)
     public TransactionDto transferMoney(TransactionDto transactionDto) {
         // Lógica para transferir dinero entre cuentas
 

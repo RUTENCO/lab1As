@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import com.udea.lab1As.service.TransactionService;
 
 
 @RestController
-
+@CrossOrigin(origins = "*") // Permitir CORS desde cualquier origen
 @RequestMapping( value = "/api/transactions", produces = "application/json")
 public class TransactionController {
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import com.udea.lab1As.service.CustomerService;
 
 
 @RestController // Indica que esta clase es un controlador REST
-
+@CrossOrigin(origins = "*") // Permitir CORS desde cualquier origen
 @RequestMapping( value = "/api/customers", produces = "application/json") // Ruta base para todas las solicitudes en este controlador
 public class CustomerController {
 

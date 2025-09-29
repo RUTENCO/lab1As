@@ -3,8 +3,8 @@ import axios from 'axios';
 // Configuración base de axios
 const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production' 
-    ? '/api' // En producción usará el mismo dominio
-    : 'http://localhost:8080/api', // En desarrollo apunta al Spring Boot
+    ? '/api' // En producción (Vercel) usará el mismo dominio
+    : 'http://localhost:8080/api', // En desarrollo apunta al Spring Boot local
   headers: {
     'Content-Type': 'application/json',
   },

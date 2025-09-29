@@ -11,13 +11,18 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: ${SHOW_SQL:true}
     properties:
       hibernate:
-        '[format_sql]': true
+        '[format_sql]': ${FORMAT_SQL:true}
   transaction:
     default-timeout: 30
     rollback-on-commit-failure: true
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   port: ${PORT:8080}
@@ -25,5 +30,22 @@ server:
 logging:
   level:
     '[com.udea.lab1As]': INFO
-    '[org.springframework]': INFO
-    '[org.hibernate.SQL]': DEBUG
+    '[org.springframework]': ${SPRING_LOG_LEVEL:INFO}
+    '[org.hibernate.SQL]': ${SQL_LOG_LEVEL:DEBUG}
+
+---
+# Configuración específica para producción
+spring:
+  profiles: production
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        '[format_sql]': false
+
+logging:
+  level:
+    '[com.udea.lab1As]': INFO
+    '[org.springframework]': WARN
+    '[org.hibernate.SQL]': WARN
+    root: INFO

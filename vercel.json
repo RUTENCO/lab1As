@@ -1,7 +1,8 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "src/main/java/com/udea/lab1As/Lab1AsApplication.java",
+      "src": "pom.xml",
       "use": "@vercel/java"
     },
     {

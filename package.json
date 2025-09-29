@@ -1,0 +1,15 @@
+{
+  "name": "lab1as-fullstack",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd frontend && npm start",
+    "dev": "concurrently \"cd frontend && npm run dev\" \"./mvnw spring-boot:run\"",
+    "install-frontend": "cd frontend && npm install",
+    "build-frontend": "cd frontend && npm run build",
+    "build-backend": "./mvnw clean package -DskipTests"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

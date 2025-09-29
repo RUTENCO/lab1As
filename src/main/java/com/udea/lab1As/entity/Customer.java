@@ -16,7 +16,7 @@ import lombok.Data;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //generacion automatica del id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //generacion automatica del id
     private Long id;
 
     @Column(unique = true, nullable = false) // no permitir nulos y unico

@@ -1,13 +1,11 @@
-# Conversion to YAML from Properties formar report
-# Warnings:
-# - The yaml file had comments which are lost in the refactoring!
 spring:
   application:
     name: lab1As
   datasource:
-    url: jdbc:postgresql://${DB_HOST_LOCAL}:${DB_PORT_LOCAL}/${DB_NAME_LOCAL}?sslmode=${DB_SSLMODE_LOCAL}
-    username: ${DB_USER_LOCAL}
-    password: ${DB_PASSWORD_LOCAL}
+    # Para desarrollo local usa PostgreSQL local, para producción usa las variables de Neon
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/lab1As}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:123}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -16,25 +14,16 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        '[format_sql]': true
   transaction:
     default-timeout: 30
     rollback-on-commit-failure: true
-  mvc:
-    contentnegotiation:
-      favor-path-extension: false
-      favor-parameter: false
-      media-types:
-        json: application/json
+
 server:
-  port: 8080
+  port: ${PORT:8080}
+
 logging:
   level:
-    org:
-      springframework: INFO
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+    '[com.udea.lab1As]': INFO
+    '[org.springframework]': INFO
+    '[org.hibernate.SQL]': DEBUG

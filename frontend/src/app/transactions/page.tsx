@@ -5,6 +5,22 @@ import { transactionService, customerService, Transaction, Customer } from '@/li
 import { toast } from 'react-hot-toast';
 import { ArrowRightLeft, Search, History } from 'lucide-react';
 
+// Helper function para formatear fechas correctamente
+const formatDateForDisplay = (dateString: string) => {
+  // Crear fecha directamente desde el string sin conversión de zona horaria
+  const [year, month, day] = dateString.split('-');
+  return `${day}/${month}/${year}`;
+};
+
+// Helper function para obtener fecha actual en formato YYYY-MM-DD
+const getCurrentDateString = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function TransactionsPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -15,7 +31,7 @@ export default function TransactionsPage() {
     senderAccountNumber: '',
     receiverAccountNumber: '',
     amount: 0,
-    transactionDate: new Date().toISOString().split('T')[0]
+    transactionDate: getCurrentDateString()
   });
 
   // Cargar clientes
@@ -76,7 +92,7 @@ export default function TransactionsPage() {
         senderAccountNumber: '',
         receiverAccountNumber: '',
         amount: 0,
-        transactionDate: new Date().toISOString().split('T')[0]
+        transactionDate: getCurrentDateString()
       });
       fetchCustomers(); // Actualizar saldos
     } catch (error) {
@@ -257,7 +273,7 @@ export default function TransactionsPage() {
               {transactions.map((transaction) => (
                 <tr key={transaction.id} className="hover:bg-green-50 border-b border-gray-100">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">
-                    {new Date(transaction.transactionDate).toLocaleDateString()}
+                    {formatDateForDisplay(transaction.transactionDate)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                     {transaction.senderAccountNumber}

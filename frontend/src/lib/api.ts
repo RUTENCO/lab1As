@@ -1,14 +1,47 @@
 import axios from 'axios';
 
 // Configuración base de axios
+const baseURL = process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api`
+  : 'http://localhost:8080/api'; // En desarrollo apunta al Spring Boot local
+
+// Debug: mostrar la URL que se está usando
+console.log('🚀 API Base URL:', baseURL);
+console.log('🌍 Environment:', process.env.NODE_ENV);
+console.log('🔗 NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL 
-    ? `${process.env.NEXT_PUBLIC_API_URL}/api`
-    : 'http://localhost:8080/api', // En desarrollo apunta al Spring Boot local
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Debug: interceptor para mostrar todas las peticiones
+api.interceptors.request.use(
+  (config) => {
+    console.log('📡 Making request to:', config.url);
+    console.log('🔧 Full URL:', `${config.baseURL}${config.url}`);
+    return config;
+  },
+  (error) => {
+    console.error('❌ Request error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Debug: interceptor para mostrar respuestas y errores
+api.interceptors.response.use(
+  (response) => {
+    console.log('✅ Response received from:', response.config.url);
+    return response;
+  },
+  (error) => {
+    console.error('❌ Response error:', error.message);
+    console.error('🔍 Error details:', error.response?.data || error);
+    return Promise.reject(error);
+  }
+);
 
 // Tipos TypeScript
 export interface Customer {

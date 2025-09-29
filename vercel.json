@@ -2,25 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "pom.xml",
-      "use": "@vercel/java"
-    },
-    {
       "src": "frontend/package.json",
       "use": "@vercel/next"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
-  ],
-  "env": {
-    "SPRING_PROFILES_ACTIVE": "production"
-  }
+  ]
 }

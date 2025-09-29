@@ -36,7 +36,9 @@ logging:
 ---
 # Configuración específica para producción
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production
   jpa:
     show-sql: false
     properties:

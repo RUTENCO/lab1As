@@ -1,119 +1,67 @@
-# Lab1As - Sistema Bancario Full Stack
+# 🏦 Sistema Bancario - Lab1As
 
-Sistema bancario completo con Spring Boot (backend) y Next.js (frontend).
+Sistema bancario que permite la gestión de clientes y transacciones financieras con una interfaz web moderna y responsiva.
 
-## 🚀 Despliegue en Producción
+## 📋 Funcionalidades
 
-### Paso 1: Configurar Base de Datos en Neon
+- **Gestión de Clientes**: Crear, leer, actualizar y eliminar clientes bancarios
+- **Transacciones**: Realizar transferencias entre cuentas con validación de saldos
+- **Historial**: Consultar el historial completo de transacciones por cuenta
+- **Interfaz Responsiva**: Optimizada para dispositivos móviles y escritorio
+- **Validación de Fechas**: Manejo correcto de fechas sin problemas de zona horaria
 
-1. Ve a [neon.tech](https://neon.tech) y crea una cuenta
-2. Crea una nueva base de datos PostgreSQL
-3. Copia la cadena de conexión que te proporciona Neon
-4. La cadena se verá así: `postgresql://username:password@ep-xxx.neon.tech/dbname?sslmode=require`
+## 🛠️ Tecnologías Utilizadas
 
-### Paso 2: Desplegar en Vercel
+### Backend
+- **Java 21** - Lenguaje de programación
+- **Spring Boot 3.5.6** - Framework de aplicación
+- **Spring Data JPA** - Persistencia de datos
+- **PostgreSQL** - Base de datos relacional
+- **Maven** - Gestión de dependencias
+- **Hibernate** - ORM (Object-Relational Mapping)
+- **Lombok** - Reducción de código boilerplate
 
-1. **Sube tu código a GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/lab1as.git
-   git push -u origin main
-   ```
+### Frontend
+- **Next.js 15.5.4** - Framework de React
+- **React 19.1.0** - Biblioteca de interfaz de usuario
+- **TypeScript 5** - Tipado estático
+- **Tailwind CSS 4** - Framework de estilos
+- **Axios** - Cliente HTTP
+- **React Hot Toast** - Notificaciones
+- **Lucide React** - Iconos
 
-2. **Conecta con Vercel:**
-   - Ve a [vercel.com](https://vercel.com)
-   - Conecta tu repositorio de GitHub
-   - Selecciona tu proyecto `lab1as`
+### Base de Datos
+- **Neon PostgreSQL** - Base de datos en la nube
+- **Conexión SSL** - Seguridad en la conexión
 
-3. **Configurar Variables de Entorno en Vercel:**
-   En la configuración del proyecto en Vercel, añade estas variables:
-   ```
-   DATABASE_URL=postgresql://username:password@ep-xxx.neon.tech/dbname?sslmode=require
-   DATABASE_USERNAME=tu_username_neon
-   DATABASE_PASSWORD=tu_password_neon
-   SPRING_PROFILES_ACTIVE=production
-   ```
+## 🚀 Plataformas de Despliegue
 
-4. **Configurar Build Settings:**
-   - Framework Preset: Next.js
-   - Build Command: `npm run build`
-   - Output Directory: `frontend/.next`
-   - Install Command: `npm install`
+### 🌐 Producción
+- **Frontend**: [Vercel](https://vercel.com) - Plataforma de despliegue para aplicaciones frontend
+- **Backend**: [Render](https://render.com) - Plataforma de despliegue para aplicaciones backend
+- **Base de Datos**: [Neon](https://neon.tech) - PostgreSQL serverless en la nube
 
-### Paso 3: Configuración Adicional
+### 🔗 URLs de Producción
+- **Aplicación Web**: `https://lab1as-frontend.vercel.app`
+- **API Backend**: `https://lab1as.onrender.com/api`
+- **Base de Datos**: Neon PostgreSQL (conexión privada)
 
-**Para el Backend (Spring Boot):**
-- El backend se ejecutará automáticamente en Vercel usando `@vercel/java`
-- Las tablas se crearán automáticamente en Neon la primera vez
-
-**Para el Frontend (Next.js):**
-- Se construirá automáticamente y se servirá desde Vercel
-- La API apuntará automáticamente al backend en el mismo dominio
-
-## 🛠️ Desarrollo Local
-
-### Prerrequisitos
-- Java 17+
-- Node.js 18+
-- PostgreSQL (o usar Neon también para desarrollo)
-
-### Configuración
-1. Clona el repositorio
-2. Copia `.env.example` a `.env` y configura tus variables
-3. Copia `frontend/.env.local.example` a `frontend/.env.local`
-
-### Ejecutar en desarrollo
-```bash
-# Instalar dependencias del frontend
-cd frontend && npm install
-
-# Ejecutar todo (backend + frontend)
-npm run dev
-```
-
-O ejecutar por separado:
-```bash
-# Backend (terminal 1)
-./mvnw spring-boot:run
-
-# Frontend (terminal 2)
-cd frontend && npm run dev
-```
-
-## 📁 Estructura del Proyecto
+## 🏗️ Arquitectura
 
 ```
-lab1As/
-├── src/                          # Backend Spring Boot
-│   ├── main/java/com/udea/lab1As/
-│   └── main/resources/
-├── frontend/                     # Frontend Next.js
-│   ├── src/
-│   └── package.json
-├── vercel.json                   # Configuración de Vercel
-├── package.json                  # Scripts del proyecto
-└── README.md
+┌─────────────────┐    HTTPS    ┌─────────────────┐    HTTPS    ┌─────────────────┐
+│                 │ -----------> │                 │ -----------> │                 │
+│  Frontend       │              │  Backend        │              │  Database       │
+│  (Vercel)       │              │  (Render)       │              │  (Neon)         │
+│  Next.js        │              │  Spring Boot    │              │  PostgreSQL     │
+└─────────────────┘              └─────────────────┘              └─────────────────┘
 ```
 
-## 🌐 URLs después del despliegue
+## 📊 Características Técnicas
 
-- **Aplicación completa:** `https://tu-proyecto.vercel.app`
-- **API Backend:** `https://tu-proyecto.vercel.app/api`
-- **Frontend:** `https://tu-proyecto.vercel.app`
-
-## 🔧 Solución de Problemas
-
-### Error de conexión a la base de datos
-- Verifica que la URL de Neon sea correcta
-- Asegúrate de que incluya `?sslmode=require` al final
-
-### Error de CORS
-- El archivo `CorsConfig.java` ya está configurado para producción
-- Verifica que las URLs estén correctas
-
-### Error de build
-- Asegúrate de que todas las dependencias estén instaladas
-- Verifica que las variables de entorno estén configuradas correctamente
+- **Arquitectura RESTful** - API bien estructurada con endpoints claros
+- **CORS Configurado** - Permite comunicación entre dominios diferentes
+- **Responsive Design** - Adaptado para móviles, tablets y escritorio
+- **Manejo de Errores** - Validaciones tanto en frontend como backend
+- **Logging Avanzado** - Sistema de logs con colores y formato mejorado
+- **Dockerización** - Backend containerizado para fácil despliegue

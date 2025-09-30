@@ -107,26 +107,27 @@ export default function TransactionsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-3">
-            <ArrowRightLeft className="h-8 w-8 text-green-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Transacciones</h1>
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        {/* Header responsive */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ArrowRightLeft className="h-6 w-6 sm:h-8 sm:w-8 text-green-600" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Transacciones</h1>
           </div>
-        <button
-          onClick={() => setShowTransferForm(true)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-        >
-          <ArrowRightLeft className="h-4 w-4" />
-          Nueva Transferencia
-        </button>
-      </div>
+          <button
+            onClick={() => setShowTransferForm(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
+          >
+            <ArrowRightLeft className="h-4 w-4" />
+            <span className="text-sm sm:text-base">Nueva Transferencia</span>
+          </button>
+        </div>
 
       {/* Formulario de transferencia */}
       {showTransferForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4 shadow-2xl">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Nueva Transferencia</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-4 sm:p-6 rounded-lg max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-800">Nueva Transferencia</h2>
             <form onSubmit={handleTransfer} className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">Cuenta Origen</label>
@@ -188,17 +189,17 @@ export default function TransactionsPage() {
                 />
               </div>
               
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   type="submit"
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors text-sm sm:text-base font-medium"
                 >
                   Transferir
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowTransferForm(false)}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded-lg transition-colors"
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-3 px-4 rounded-lg transition-colors text-sm sm:text-base font-medium"
                 >
                   Cancelar
                 </button>
@@ -215,11 +216,12 @@ export default function TransactionsPage() {
           <h2 className="text-lg font-semibold text-gray-800">Buscar Historial de Transacciones</h2>
         </div>
         
-        <div className="flex gap-2">
+        {/* Search responsive */}
+        <div className="flex flex-col sm:flex-row gap-3">
           <select
             value={searchAccount}
             onChange={(e) => setSearchAccount(e.target.value)}
-            className="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-800 bg-white text-base"
+            className="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-800 bg-white text-sm sm:text-base"
           >
             <option value="" className="text-gray-600">Seleccionar cuenta para ver historial</option>
             {customers.map((customer) => (
@@ -231,14 +233,14 @@ export default function TransactionsPage() {
           <button
             onClick={searchTransactions}
             disabled={isLoading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-4 sm:px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
           >
             {isLoading ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
             ) : (
               <History className="h-4 w-4" />
             )}
-            Buscar
+            <span className="text-sm sm:text-base">Buscar</span>
           </button>
         </div>
       </div>
@@ -246,45 +248,30 @@ export default function TransactionsPage() {
       {/* Lista de transacciones */}
       {transactions.length > 0 && (
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 bg-green-50">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-green-50">
             <h3 className="text-lg font-semibold text-gray-900">Historial de Transacciones</h3>
           </div>
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-green-600">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Fecha
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Origen
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Destino
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Monto
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Tipo
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {transactions.map((transaction) => (
-                <tr key={transaction.id} className="hover:bg-green-50 border-b border-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">
-                    {formatDateForDisplay(transaction.transactionDate)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    {transaction.senderAccountNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    {transaction.receiverAccountNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-700">
-                    ${transaction.amount.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+          
+          {/* Vista móvil - Cards */}
+          <div className="block sm:hidden">
+            {transactions.map((transaction) => (
+              <div key={transaction.id} className="border-b border-gray-200 p-4 hover:bg-green-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-gray-800 mb-1">
+                      {formatDateForDisplay(transaction.transactionDate)}
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      De: <span className="font-medium">{transaction.senderAccountNumber}</span>
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      Para: <span className="font-medium">{transaction.receiverAccountNumber}</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-green-700 mb-1">
+                      ${transaction.amount.toFixed(2)}
+                    </div>
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                       transaction.senderAccountNumber === searchAccount 
                         ? 'bg-red-100 text-red-800' 
@@ -292,11 +279,63 @@ export default function TransactionsPage() {
                     }`}>
                       {transaction.senderAccountNumber === searchAccount ? 'Enviado' : 'Recibido'}
                     </span>
-                  </td>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Vista escritorio - Tabla */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-green-600">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Fecha
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Origen
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Destino
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Monto
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Tipo
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {transactions.map((transaction) => (
+                  <tr key={transaction.id} className="hover:bg-green-50 border-b border-gray-100">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">
+                      {formatDateForDisplay(transaction.transactionDate)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {transaction.senderAccountNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {transaction.receiverAccountNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-700">
+                      ${transaction.amount.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        transaction.senderAccountNumber === searchAccount 
+                          ? 'bg-red-100 text-red-800' 
+                          : 'bg-green-100 text-green-800'
+                      }`}>
+                        {transaction.senderAccountNumber === searchAccount ? 'Enviado' : 'Recibido'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
       </div>

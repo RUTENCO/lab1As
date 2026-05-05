@@ -46,6 +46,19 @@ Sistema bancario que permite la gestión de clientes y transacciones financieras
 - **API Backend**: `https://lab1as.onrender.com/api`
 - **Base de Datos**: Neon PostgreSQL (conexión privada)
 
+## 🧪 Entorno Local
+
+- **Backend**: `http://localhost:8080`
+- **Frontend**: `http://localhost:3000`
+
+El frontend de Next.js usa el puerto `3000` por defecto con `npm run dev`, y el backend de Spring Boot usa el puerto `8080` por defecto mediante `server.port=${PORT:8080}`.
+
+### Orígenes permitidos en CORS
+
+- `http://localhost:3000`
+- `http://127.0.0.1:3000`
+- `https://lab1-as.vercel.app`
+
 ## 🏗️ Arquitectura
 
 ```

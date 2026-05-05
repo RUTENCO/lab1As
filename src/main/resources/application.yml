@@ -1,53 +1,18 @@
 spring:
-  application:
-    name: lab1As
   datasource:
-    # Para desarrollo local usa PostgreSQL local, para producción usa las variables de Neon
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/lab1As}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:123}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-    show-sql: ${SHOW_SQL:true}
+    show-sql: true
     properties:
       hibernate:
-        '[format_sql]': ${FORMAT_SQL:true}
-  transaction:
-    default-timeout: 30
-    rollback-on-commit-failure: true
-  jackson:
-    date-format: yyyy-MM-dd
-    time-zone: UTC
-    serialization:
-      write-dates-as-timestamps: false
-
-server:
-  port: ${PORT:8080}
-
-logging:
-  level:
-    '[com.udea.lab1As]': INFO
-    '[org.springframework]': ${SPRING_LOG_LEVEL:INFO}
-    '[org.hibernate.SQL]': ${SQL_LOG_LEVEL:DEBUG}
-
----
-# Configuración específica para producción
-spring:
-  config:
-    activate:
-      on-profile: production
-  jpa:
-    show-sql: false
-    properties:
-      hibernate:
-        '[format_sql]': false
-
-logging:
-  level:
-    '[com.udea.lab1As]': INFO
-    '[org.springframework]': WARN
-    '[org.hibernate.SQL]': WARN
-    root: INFO
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
